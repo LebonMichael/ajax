@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Document</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
+</head>
+<body>
+
+<h1> XMLHTTPREQUEST (XML)</h1>
+<table class="table">
+    <thead>
+    <tr id="test">
+
+    </tr>
+    </thead>
+    <tbody id="accor">
+
+    </tbody>
+</table>
+<!-- list element weergave-->
+
+<button class="btn btn-primary" onclick="loadDoc()" type="button"> Wijzig content</button>
+<!-- door te drukken op de kno wordt de xml uitgevoerd-->
+
+<script crossorigin="anonymous"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+<script>
+    // XML BESTAND UITLEZEN MET XMLREQUEST
+
+    function loadDoc() {
+        var xhttp, xmlDoc, txt, y, i;
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                xmlDoc = this.responseXML; // hiermee word de lijn geopend
+                books = xmlDoc.getElementsByTagName("book"); // je neemt alle books mee en de tags, alle nodes zitten eronder. 12 aanwezig, zal dus 1de element zijn. is ook de lengte van de aantal books.
+                txt = "";
+
+                /*   for(i=0; i < books[0].children.length; i++){
+                       txt +=  "<th scope='col'>" + books[0].children[i].nodeValue;
+                       console.log(books[0])
+                   }
+                   document.getElementById("test").innerHTML += txt + "</th>";
+                   txt = "";
+   */
+                for (i = 0; i < books.length; i++) {
+                    txt +=" <tr><th scope='row'>" + i + "</th><td>"
+                    for (y=0; y < books[i].children.length; y++ ){
+                        txt += books[i].children[y].childNodes[0].nodeValue + "</td><td>" ;
+                    }
+                    document.getElementById("accor").innerHTML += txt + "</tr>";
+                    txt = "";
+                }
+
+            }
+        }
+        xhttp.open("GET", "books.xml", true);
+        xhttp.send();
+    }
+</script>
+
+
+</body>
+</html>
